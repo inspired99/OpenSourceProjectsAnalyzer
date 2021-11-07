@@ -8,7 +8,6 @@ def run(username, repo):
     keys_file = open("Resources/access_token.txt")
     lines = keys_file.readlines()
     access_token = lines[0].rstrip()
-    # access_token = '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'
     g = Github(access_token)
     repo = g.get_repo(f'{username}/{repo}')
     av_commits_count = int(repo.get_commits(since=one_year_ago).totalCount / 12)
