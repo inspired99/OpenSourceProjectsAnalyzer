@@ -1,5 +1,5 @@
 from argparse import ArgumentParser
-from CommitFrequency import commit_freq
+from GitHubMetrisc import commit_freq
 import re
 
 
