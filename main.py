@@ -1,5 +1,6 @@
 from argparse import ArgumentParser
 from GitHubMetrisc import commit_freq
+from GitHubMetrisc import issues_activity
 import re
 
 
@@ -21,7 +22,7 @@ if __name__ == '__main__':
             username = matched.group(4)
             repo = matched.group(5)
             print()
-            print(commit_freq.run(username, repo))
+            print(issues_activity.run(username, repo))
             print()
         else:
             print('Sorry, it seems like your url is not valid'
