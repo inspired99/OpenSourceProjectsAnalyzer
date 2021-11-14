@@ -1,25 +1,25 @@
-project_url, intuitive_score_VSPlekhanov
-https://github.com/angular/angular, 10
-https://github.com/pharo-project/pharo, 10
-https://github.com/redline-smalltalk/redline-smalltalk, 3
-https://github.com/fossasia/visdom, 8
-https://github.com/diaspora/diaspora, 7
-https://github.com/durch/rust-s3, 8
-https://github.com/zappa/zappa, 7
-https://github.com/mnapoli/IsItMaintained, 10
-https://github.com/logsol/Github-Auto-Deploy, 0
-https://github.com/r10r/rcswitch-pi, 0
-https://github.com/sui77/rc-switch, 5
-https://github.com/apache/cassandra, 10
-https://github.com/microsoft/vscode, 10
-https://github.com/microsoft/TypeScript, 10
-https://github.com/google/guava, 10
-https://github.com/google/leveldb, 9
-https://github.com/vuejs/vue, 10
-https://github.com/tensorflow/tensorflow,10
-https://github.com/golang/go, 10
-https://github.com/dtao/lazy.js, 4
-https://github.com/evernote/android-job, 1
-https://github.com/ValveSoftware/openvr, 2
-https://github.com/googleanalytics/autotrack, 1
-https://github.com/hierynomus/smbj, 7
+project_url
+https://github.com/angular/angular
+https://github.com/pharo-project/pharo
+https://github.com/redline-smalltalk/redline-smalltalk
+https://github.com/fossasia/visdom
+https://github.com/diaspora/diaspora
+https://github.com/durch/rust-s3
+https://github.com/zappa/zappa
+https://github.com/mnapoli/IsItMaintained
+https://github.com/logsol/Github-Auto-Deploy
+https://github.com/r10r/rcswitch-pi
+https://github.com/sui77/rc-switch
+https://github.com/apache/cassandra
+https://github.com/microsoft/vscode
+https://github.com/microsoft/TypeScript
+https://github.com/google/guava
+https://github.com/google/leveldb
+https://github.com/vuejs/vue
+https://github.com/tensorflow/tensorflow
+https://github.com/golang/go
+https://github.com/dtao/lazy.js
+https://github.com/evernote/android-job
+https://github.com/ValveSoftware/openvr
+https://github.com/googleanalytics/autotrack
+https://github.com/hierynomus/smbj
