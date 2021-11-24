@@ -14,9 +14,13 @@ export class ProjectList implements OnInit {
   constructor(private projectService: ProjectService) {
   }
 
-  ngOnInit() {
-    this.projectService.findAll().subscribe((data: any) => {
-      this.projects = data;
-    });
+  OnSearch(url: string) {
+    this.projectService.findProject(url).subscribe((data: any) => {
+     this.projects = data;
+     });
   }
+    ngOnInit() {
+       this.projectService.findProject("https://github.com/angular/angular")
+          .subscribe((data: any) => { this.projects = data; });
+    }
 }

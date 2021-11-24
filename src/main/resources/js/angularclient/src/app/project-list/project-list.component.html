@@ -1,3 +1,9 @@
+<ul class="text-center list-inline py-3">
+  <div class="input-group">
+    <input type="search" class="form-control rounded" placeholder="Project URL" #search id="search"/>
+    <button type="button" class="btn btn-outline-primary" (click)="OnSearch(search.value)">search</button>
+  </div>
+</ul>
 <div class="card my-5">
   <div class="card-body">
     <table class="table table-bordered table-striped">

@@ -37,7 +37,7 @@ public class MainController {
     @GetMapping("/search")
     @CrossOrigin(origins = "http://localhost:4200") //todo remove this
     public ResponseEntity<List<Project>> search(@RequestParam(name="url", required = false, defaultValue = "") String url) {
-        Project project = new Project("https://github/vsplekhanov/OpenSourceProjectsAnalyzer", "OpenSourceProjectsAnalyzer", "Very good project");
+        Project project = new Project(url, "You project", "Very good project");
         return ResponseEntity.ok(Collections.singletonList(project));
     }
 

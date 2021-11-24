@@ -13,7 +13,10 @@ export class ProjectService {
     this.projectsURL = 'http://localhost:8080/search';
   }
 
-  public findAll(): Observable<Project[]> {
-    return this.http.get<Project[]>(this.projectsURL);
+  public findProject(searchUrl: string): Observable<Project> {
+//     if (searchUrl.trim()) {
+        return this.http.get<Project>(`${this.projectsURL}/?url=${searchUrl}`);
+//     }
+//     return Project | {};
   }
 }

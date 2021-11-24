@@ -4,7 +4,6 @@ import { ProjectList } from './project-list/project-list.component';
 
 const routes: Routes = [
   { path: 'search', component: ProjectList },
-//   { path: 'adduser', component: UserFormComponent }
 ];
 
 @NgModule({
