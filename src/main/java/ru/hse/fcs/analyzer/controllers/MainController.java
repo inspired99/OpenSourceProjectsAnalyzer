@@ -21,12 +21,17 @@ public class MainController {
 
     @GetMapping("/search")
     @CrossOrigin(origins = "http://localhost:4200") //todo remove this
-    public ResponseEntity<List<Project>> search(@RequestParam(name="url", required = false, defaultValue = "") String url) throws IOException, InterruptedException {
-        String res = pythonService.performAnalysis(url);
-        String[] split = url.split("/");
-        String name = split[split.length - 1];
-        Project project = new Project(url, name, res);
-        return ResponseEntity.ok(Collections.singletonList(project));
+    public ResponseEntity<?> search(@RequestParam(name="url", required = false, defaultValue = "") String url) throws IOException, InterruptedException {
+        try {
+            String res = pythonService.performAnalysis(url);
+
+            String[] split = url.split("/");
+            String name = split[split.length - 1];
+            Project project = new Project(url, name, res);
+            return ResponseEntity.ok(Collections.singletonList(project));
+        } catch (Exception e){
+            return ResponseEntity.status(400).body(e.getMessage());
+        }
     }
 
 }

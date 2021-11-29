@@ -7,16 +7,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class PythonService {
 
-//    public static void main(String[] args) throws IOException, InterruptedException {
-//        System.out.println(performAnalysis("https://github.com/angular/angular"));
-//    }
+    public static void main(String[] args) throws IOException, InterruptedException {
+        PythonService pythonService = new PythonService();
+        System.out.println(pythonService.performAnalysis("https://github.com/angular/angular"));
+    }
 
     public String performAnalysis(String url) throws IOException, InterruptedException {
-        ProcessBuilder processBuilder = new ProcessBuilder("python3", "src/main/resources/python/main.py");
+        ProcessBuilder processBuilder = new ProcessBuilder("python3", "src/main/resources/python/main.py", url);
         processBuilder.redirectErrorStream(true);
 
         Process process = processBuilder.start();
@@ -24,7 +26,7 @@ public class PythonService {
         input.write(url.getBytes(StandardCharsets.UTF_8));
 
         InputStream out = process.getInputStream();
-        int exitCode = process.waitFor();
+        process.waitFor(10, TimeUnit.SECONDS);
         return IOUtils.toString(out, StandardCharsets.UTF_8);
     }
 }

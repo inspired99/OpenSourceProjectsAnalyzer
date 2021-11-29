@@ -18,7 +18,9 @@
       <tr *ngFor="let project of projects">
         <td><a href="{{ project.url }}">{{ project.url }}</a></td>
         <td>{{ project.name }}</td>
-        <td>{{ project.info }}</td>
+        <td>
+          <span style="white-space: pre-line">{{ project.info }}</span>
+        </td>
       </tr>
       </tbody>
     </table>

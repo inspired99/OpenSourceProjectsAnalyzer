@@ -3,7 +3,7 @@ from github import Github
 
 
 def run(username, repo):
-    keys_file = open("Resources/access_token.txt")
+    keys_file = open("src/main/resources/python/Resources/access_token.txt")
     lines = keys_file.readlines()
     access_token = lines[0].rstrip()
     g = Github(access_token)
