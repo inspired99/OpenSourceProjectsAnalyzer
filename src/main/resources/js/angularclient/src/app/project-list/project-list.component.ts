@@ -7,7 +7,7 @@ import { ProjectService } from '../project-service/project.service';
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.css']
 })
-export class ProjectList implements OnInit {
+export class ProjectList {
 
   projects!: Project[];
 
@@ -19,8 +19,4 @@ export class ProjectList implements OnInit {
      this.projects = data;
      });
   }
-    ngOnInit() {
-       this.projectService.findProject("https://github.com/angular/angular")
-          .subscribe((data: any) => { this.projects = data; });
-    }
 }

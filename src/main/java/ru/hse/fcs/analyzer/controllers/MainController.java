@@ -11,7 +11,6 @@ import ru.hse.fcs.analyzer.service.PythonService;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.List;
 
 @Controller
 public class MainController {
