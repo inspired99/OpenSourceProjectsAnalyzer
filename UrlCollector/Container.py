@@ -1,9 +1,7 @@
-from dataclasses import dataclass
 from datetime import datetime
 from github import Github, AuthenticatedUser, NamedUser, Repository
-from github.GithubException import UnknownObjectException
 import pandas as pd
-from typing import List, Union, Optional, Any, Callable
+from typing import List, Union, Optional, Any, Callable, Dict
 import random
 
 with open('TOKEN.txt') as f:
@@ -17,9 +15,11 @@ class BaseClass:
 
     def __init__(self, obj: Optional[Any] = None, name: Optional[str] = None) -> None:
         if obj is not None:
+            print(f'Obj is known: {obj}. \t\t\t\t Do not request to {obj.name}')
             self.obj = obj
             self.name = obj.name
         elif name is not None:
+            print(f'Only name is known. \t\t\t\tRequesting to {name}')
             self.obj = self.request(name)
             self.name = name
         else:
@@ -30,28 +30,38 @@ class BaseClass:
     def __eq__(self, other):
         return self.url == other.url
 
-
-    def neighbours(self):
+    def get_neighbours(self):
         raise NotImplementedError('Not implemented')
 
 
 class User(BaseClass):
     request = g.get_user
     is_repo = False
+    neighbours = None
 
-    def neighbours(self, parent=True):
+    def get_neighbours(self, parent=True):
 
         if parent:
-            return [repo.parent if repo.parent is not None else repo for repo in self.obj.get_repos()]
-        return list(self.obj.get_repos())
+            self.neighbours = [repo.parent if repo.parent is not None else repo for repo in self.obj.get_repos()]
+        else:
+            self.neighbours = list(self.obj.get_repos())
+        return self.neighbours
+
+    def get_info(self):
+        return {
+            'url': self.obj.html_url,
+            'repos count': len(list(self.neighbours)) if self.neighbours is not None else "null"
+        }
 
 
 class Repo(BaseClass):
     request = g.get_repo
     is_repo = True
+    neighbours = None
 
-    def neighbours(self):
-        return list(self.obj.get_contributors())
+    def get_neighbours(self):
+        self.neighbours = list(self.obj.get_contributors())
+        return self.neighbours
 
     def get_info(self):
         return {
@@ -62,37 +72,67 @@ class Repo(BaseClass):
         }
 
 
-
 class GithubList:
 
     def __init__(self):
         self.users_and_repos: List[Union[User, Repo]] = []
         self.users: List[User] = []
         self.repos: List[Repo] = []
+        self.big_users: Optional[List[User]] = None
+        self.big_repos: Optional[List[Repo]] = None
+        self.neighbours: Dict[str, Union[List[User], List[Repo]]] = {}
 
     def dfs(self, start_name: str, num: int = 100):
         current_obj = get_user_or_repo(start_name)
         self.dfs_run(current_obj, num=num)
 
     def dfs_run(self, obj: Union[User, Repo], num: int = 100) -> None:
-        print(obj)
-        print(obj.neighbours())
-        new_obj = [i for i in obj.neighbours() if i not in self.users_and_repos]
+        if obj.neighbours is None:
+            new_obj = [i for i in obj.get_neighbours() if i not in self.users_and_repos]
+        else:
+            new_obj = [i for i in self.neighbours[obj.name] if i not in self.users_and_repos]
+        self.neighbours[obj.name] = new_obj
         self.users_and_repos.append(obj)
-        print([i.name for i in self.users_and_repos])
         if obj.is_repo:
             self.repos.append(obj)
+        else:
+            self.users.append(obj)
         while new_obj and len(self.repos) < num:
             self.dfs_run(get_user_or_repo(random.choice(new_obj)), num=num)
             new_obj = [i for i in new_obj if i not in self.users_and_repos]
-            print(new_obj)
+
+    def get_big_lists(self):
+        self.big_users = self.users
+        self.big_repos = self.repos
+        for key, value in self.neighbours.items():
+            if value:
+                if isinstance(value[0], Repository.Repository):
+                    for repo in value:
+                        self.big_repos.append(Repo(repo))
+                else:
+                    for user in value:
+                        self.big_users.append(User(user))
 
     def write_csv(self):
+        repos_name = 'repos_list.csv'
+        big_repos_name = 'big_repos_list.csv'
+        users_name = 'users_list.csv'
+        big_users_name = 'big_users_list.csv'
+
         repos_info = [repo.get_info() for repo in self.repos]
-        pd.DataFrame(repos_info).to_csv('projects.csv')
+        pd.DataFrame(repos_info).to_csv(repos_name)
+        users_info = [user.get_info() for user in self.users]
+        pd.DataFrame(users_info).to_csv(users_name)
+
+        self.get_big_lists()
+        repos_info = [repo.get_info() for repo in self.big_repos]
+        pd.DataFrame(repos_info).to_csv(big_repos_name)
+        users_info = [user.get_info() for user in self.big_users]
+        pd.DataFrame(users_info).to_csv(big_users_name)
 
 
 def get_user_or_repo(obj: Any) -> Union[Repo, User]:
+    print(f'Got obj: {obj}')
     if isinstance(obj, (Repo, User)):
         return obj
     elif isinstance(obj, str):

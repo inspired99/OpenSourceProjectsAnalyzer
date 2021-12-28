@@ -41,13 +41,12 @@ class ContributorsNumber(BaseMetric):
 
 
 if __name__ == '__main__':
-
-
     project_list = pd.read_csv('projects_list.csv')
     project_list = project_list[['project_url', 'average']]
     project_urls = project_list['project_url']
-    token = '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'
-    g = Github(token)
+    with open('base\\TOKEN.txt') as f:
+        ACCESS_TOKEN = f.read().splitlines()[0]
+    g = Github(ACCESS_TOKEN)
     repo = g.get_repo('{}/{}'.format(project_urls[0].split('/')[-2], project_urls[0].split('/')[-1]))
     metric = ContributorsNumber(repo)
     metric.history(history_start=datetime.now() - timedelta(days=360))
