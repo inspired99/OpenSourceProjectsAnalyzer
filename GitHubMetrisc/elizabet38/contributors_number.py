@@ -33,6 +33,7 @@ class ContributorsNumber(BaseMetric):
     def __init__(self, project: Repository, min_commits: int = 1, **kwargs):
         super().__init__(project, **kwargs)
         self.min_commits = min_commits
+        self.metric_name = f'contr_num_{min_commits}'
 
     def calculate_metric(self, start_time: date, finish_time: date, **kwargs) -> Any:
         commits = self.project.get_commits(since=start_time, until=finish_time)
@@ -48,7 +49,7 @@ if __name__ == '__main__':
         ACCESS_TOKEN = f.read().splitlines()[0]
     g = Github(ACCESS_TOKEN)
     repo = g.get_repo('{}/{}'.format(project_urls[0].split('/')[-2], project_urls[0].split('/')[-1]))
-    metric = ContributorsNumber(repo)
+    metric = ContributorsNumber(repo, min_commits=1)
     metric.history(history_start=datetime.now() - timedelta(days=360))
     metric.get_picture_graph()
 

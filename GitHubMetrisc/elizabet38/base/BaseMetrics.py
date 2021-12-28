@@ -11,6 +11,7 @@ class BaseMetric(object):
         self.set_kwargs(**kwargs)
         self.project = project
         self.saved_history = None
+        self.metric_name = None
 
     def set_kwargs(self, **kwargs) -> None:
         for key, value in kwargs:
@@ -62,7 +63,9 @@ class BaseMetric(object):
         y = self.saved_history[:, 2]
 
         fig, ax = plt.subplots()
+        plt.xticks(rotation=45)
 
         ax.bar(x, y, width=30, edgecolor='white')
+        ax.set_title(self.metric_name)
 
-        plt.savefig('plot.png')
+        plt.savefig('plot.png', bbox_inches='tight')
