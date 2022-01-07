@@ -2,10 +2,10 @@ from datetime import datetime
 from github import Github
 
 
-def run(username, repo):
+def get_info(username, repo):
     now = datetime.now()
     one_year_ago = now.replace(year=now.year - 1)
-    keys_file = open("Resources/access_token.txt")
+    keys_file = open("Resources/github_access_token.txt")
     lines = keys_file.readlines()
     access_token = lines[0].rstrip()
     g = Github(access_token)

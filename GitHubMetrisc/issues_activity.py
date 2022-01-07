@@ -2,8 +2,8 @@ from datetime import datetime, timedelta
 from github import Github
 
 
-def run(username, repo):
-    keys_file = open("Resources/access_token.txt")
+def get_info(username, repo):
+    keys_file = open("Resources/github_access_token.txt")
     lines = keys_file.readlines()
     access_token = lines[0].rstrip()
     g = Github(access_token)
