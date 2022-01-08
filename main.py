@@ -1,10 +1,11 @@
-from GitHubMetrisc import commit_freq
-from GitHubMetrisc import issues_activity
+from Metrics import commit_freq
+from Metrics import issues_activity
+import os
 import re
 import logging
 from aiogram import Bot, Dispatcher, executor, types
 
-API_TOKEN = 'ACCESS_TOKEN'
+API_TOKEN = os.getenv("TELEGRAM_API_TOKEN")
 
 # All available metrics
 metrics_list = [commit_freq, issues_activity]
@@ -29,9 +30,14 @@ async def echo(message: types.Message):
     matched = re.match('((https://)|(http:/\/))?github\.com\/([A-Za-z0-9\S]+)'
                        '\/([A-Za-z0-9\S]+)', url)
     if matched:
+        await message.answer("Processing with the request...")
         username = matched.group(4)
         repo = matched.group(5)
-        answer = '\n\n'.join([m.get_info(username, repo) for m in metrics_list])
+        try:
+            answer = '\n\n'.join([m.get_info(username, repo) for m in metrics_list])
+        except Exception:
+            answer = 'Sorry, something went wrong in my side. You can try later'
+
     else:
         answer = 'Sorry, it seems like your url is not valid\n' \
                  ' The valid url should look like that: https://github.com/username/reponame'

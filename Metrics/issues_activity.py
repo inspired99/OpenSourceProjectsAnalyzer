@@ -1,11 +1,10 @@
+import os
 from datetime import datetime, timedelta
 from github import Github
 
 
 def get_info(username, repo):
-    keys_file = open("Resources/github_access_token.txt")
-    lines = keys_file.readlines()
-    access_token = lines[0].rstrip()
+    access_token = os.getenv("GITHUB_API_TOKEN")
     g = Github(access_token)
     repo = g.get_repo(f'{username}/{repo}')
 
