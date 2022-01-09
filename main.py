@@ -35,9 +35,9 @@ async def echo(message: types.Message):
         repo = matched.group(5)
         try:
             answer = '\n\n'.join([m.get_info(username, repo) for m in metrics_list])
-        except Exception:
-            answer = 'Sorry, something went wrong in my side. You can try later'
-
+        except Exception as e:
+            logging.error(e)
+            answer = 'Sorry, something went wrong in my side. You can try later\n' + str(e)
     else:
         answer = 'Sorry, it seems like your url is not valid\n' \
                  ' The valid url should look like that: https://github.com/username/reponame'
