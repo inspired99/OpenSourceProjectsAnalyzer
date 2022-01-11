@@ -4,7 +4,6 @@
 # It is useful to know whether repository belongs to a company or not.
 # If it does, we want to be able to say whether it is a big company.
 # Moreover, Such metric might find its use in other metrics analysis.
-# If repo owner is a company, we want to know if it is a big one.
 # --------------------
 
 # REALISATION DETAILS:
