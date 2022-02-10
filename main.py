@@ -1,6 +1,11 @@
 from Metrics import commit_freq
 from Metrics import issues_activity
 from Metrics import is_company
+from Metrics import commit_classification_metrics
+from Metrics import median_time_metrics
+from Metrics import num_commit_and_files_metrics
+from Metrics import pull_requests_metrics
+
 import os
 import re
 import logging
@@ -9,7 +14,8 @@ from aiogram import Bot, Dispatcher, executor, types
 API_TOKEN = os.getenv("TELEGRAM_API_TOKEN")
 
 # All available metrics
-metrics_list = [commit_freq, issues_activity, is_company]
+metrics_list = [commit_freq, issues_activity, is_company, commit_classification_metrics, median_time_metrics,
+                num_commit_and_files_metrics, pull_requests_metrics]
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

@@ -22,3 +22,9 @@ urllib3==1.26.7
 wrapt==1.13.3
 yarl==1.7.2
 beautifulsoup4~=4.10.0
+numpy~=1.22.2
+PyDriller~=2.0
+PyGithub~=1.55
+pytz~=2019.3
+scikit-learn~=1.0.2
+sklearn==0.0
