@@ -14,7 +14,6 @@ import numpy as np
 from datetime import datetime, timedelta
 from github import Github, UnknownObjectException, RateLimitExceededException
 
-
 def get_median_time_issue_and_pr(username, repo):
     api_token = os.getenv('GITHUB_API_TOKEN')
     g = Github(api_token)
