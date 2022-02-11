@@ -10,3 +10,4 @@ Team:
 * Evseev Elisey (ITMO)
 * Fedor Ispravnikov (HSE)
   
+Stack: Python (numpy, scikit, git api)
